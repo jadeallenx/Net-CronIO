@@ -1,1 +1,2 @@
-Net-CronIO-.*
+Net-CronIO-*
+.build*
