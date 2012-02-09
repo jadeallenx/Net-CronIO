@@ -50,6 +50,6 @@ is(scalar(@{$jobs}), 2, "got 2 jobs");
 is $cron->delete_cron( id => $job->{'id'} ), 1, "deleted job";
 
 $jobs = $cron->get_all_crons();
-is(scalar(@{$jobs}), 1, "got 1 jobs");
+is(scalar(@{$jobs}), 1, "got 1 job");
 
-is $cron->delete_cron( id => $job2->{'id'} ), 1, "deleted job2";
+is $cron->delete_cron( id => $jobs->[0]->{'id'} ), 1, "deleted job2";
