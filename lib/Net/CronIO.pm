@@ -17,9 +17,15 @@ use Carp qw(croak);
       api_password => 'sekrit',
   );
 
+  my $newjob = $cron->create_cron(
+      name => 'Daily clean up job',
+      url => 'http://example.com/blahblah/?cleanup=1',
+      schedule => '46 0 * * *',
+  );
+
   my $jobs = $cron->get_all_crons();
 
-  foreach my $job ( @{ $jobs } ) {
+  foreach my $job ( $jobs ) {
       if ( $job->{'url'} =~ /deadhost.com/ ) {
           $cron->update_cron(
             id => $job->{'id'},
@@ -27,23 +33,15 @@ use Carp qw(croak);
           );
       }
   }
-
-  my $newjob = $cron->create_cron(
-      name => 'Daily clean up job',
-      url => 'http://example.com/blahblah/?cleanup=1',
-      schedule => '46 0 * * *',
-  );
-
+  
   say "deleted" if ( $cron->delete_cron( id => $jobs->[0]->{'id'} ) );
 
-=head1 PURPOSE
-
 This is a Perl binding for the L<cron.io|http://cron.io> service.  Cron is a Unix service which
-executes specific jobs on a periodic basis. The cron.io service contacts URLs using the same
+executes jobs on a periodic basis. The cron.io service contacts URLs using the same
 time period specification.
 
 At the moment, the only way to generate a username and password for the service is by making 
-a call on the C<create_user()> method.  An email verification is required before the 
+a call on the C<create_user()> method.  Email verification is required before the 
 credentials are valid.
 
 =cut
@@ -221,3 +219,8 @@ around 'create_user' => sub {
 };
 
 1;
+
+=head1 TESTING NOTE
+
+To execute the full test suite, you must set CRONIO_API_USERNAME and CRONIO_API_PASSWORD environment 
+variables with valid credentials.
