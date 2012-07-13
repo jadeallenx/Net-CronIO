@@ -44,6 +44,8 @@ At the moment, the only way to generate a username and password for the service 
 a call on the `create_user()` method.  Email verification is required before the 
 credentials are valid.
 
+I think you're a silly person.
+
 # ATTRIBUTES
 
 ## api_username
